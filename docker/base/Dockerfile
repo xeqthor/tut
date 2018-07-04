@@ -1,5 +1,5 @@
 ##################################
-FROM ubuntu:bionic AS deps
+FROM buildpack-deps:bionic AS deps
 ##################################
 
 ARG PROJECT_NAME
@@ -9,6 +9,7 @@ RUN if [ "$PROJECT_NAME" != "tut" ]; then \
 RUN apt-get update \
  && apt-get install -y --no-install-recommends \
                     python3-dev libgraphviz-dev \
+                    curl \
  && rm -rf /var/lib/apt/lists/*
 
 ENV PYTHON_PIP_VERSION 10.0.1
@@ -48,7 +49,7 @@ RUN bash -o pipefail -c "curl -fSL 'https://bootstrap.pypa.io/get-pip.py' | pyth
 
 RUN mkdir /deps
 COPY --from=deps /wheels/* /deps/
-RUN pip install --force-reinstall --ignore-installed --upgrade --no-index --use-wheel --no-deps /deps/* \
+RUN pip install --force-reinstall --ignore-installed --upgrade --no-index --no-deps /deps/* \
  && rm -rf /deps \
  && mkdir /app /var/app
 

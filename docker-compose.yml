@@ -1,4 +1,4 @@
-version: '3.6'
+version: '3.4'
 
 x-base-service:
   &base-service
@@ -11,9 +11,9 @@ x-base-service:
       # force strings, `yes` and other unquoted stuff will end up as bools, integers and other undesired types
       PYTHONUNBUFFERED: "yes"
       CELERY_QUEUE_NAME: "crawler"
-      DB_NAME: "gigcomply"
-      DB_USER: "gigcomply"
-      DB_PASSWORD: "gigcomply"
+      DB_NAME: "tut"
+      DB_USER: "tut"
+      DB_PASSWORD: "tut"
       DB_HOST: "pg"
       DJANGO_ALLOWED_HOSTS:
       DJANGO_SECRET_KEY:
@@ -28,15 +28,20 @@ x-base-service:
     entrypoint: ["holdup", "--verbose", "tcp://pg:5432", "--"]
     stop_signal: SIGINT
 
+volumes:
+  # used for sharing uwsgi's socket to nginx
+  # maybe in the future we'll have more stuff here
+  shared-var:
+
 services:
 
   # warn: db credentials here for development only.
   pg:
     image: postgres:10
     environment:
-      POSTGRES_USER: gigcomply
-      POSTGRES_PASSWORD: gigcomply
-      POSTGRES_DB: gigcomply
+      POSTGRES_USER: tut
+      POSTGRES_PASSWORD: tut
+      POSTGRES_DB: tut
 
   redis:
     image: redis:4
@@ -69,7 +74,6 @@ services:
       - shared-var:/var/shared
     depends_on:
       - pg
-      - postfix
 
     # this should really be specified in the Dockerfile but it's buggy: https://github.com/docker/compose/issues/3140
     command: ["/start.sh"]
