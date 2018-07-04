@@ -1,0 +1,34 @@
+version: "3.6"
+
+x-develop:
+  &develop
+    volumes:
+      - "${PWD}:/app"
+    privileged: true
+
+services:
+  nginx:
+    <<: *develop
+    environment:
+      COLLECTSTATIC: "yes"
+    ports:
+        - "8000:80"  
+  uwsgi:
+    <<: *develop
+    command: ["/start.sh", "--processes", "2"]
+    environment:
+      DJANGO_ALLOWED_HOSTS: "localhost,127.0.0.1"
+  reloader:
+    <<: *develop
+    build:
+      context: docker/reloader
+    volumes:
+      - "${PWD}:/app"
+      - "shared-var:/var/shared"
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    environment:
+      RELOADER_MONITOR: "${RELOADER_MONITOR}"
+
+  celery:
+    <<: *develop
+    command: ["celery", "-A", "tut", "worker", "-l", "debug"]

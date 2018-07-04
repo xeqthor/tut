@@ -1,0 +1,85 @@
+version: '3.6'
+
+x-base-service:
+  &base-service
+    build:
+      context: .
+      dockerfile: docker/base/Dockerfile
+      args:
+        PROJECT_NAME: "${COMPOSE_PROJECT_NAME}"
+    environment:
+      # force strings, `yes` and other unquoted stuff will end up as bools, integers and other undesired types
+      PYTHONUNBUFFERED: "yes"
+      CELERY_QUEUE_NAME: "crawler"
+      DB_NAME: "gigcomply"
+      DB_USER: "gigcomply"
+      DB_PASSWORD: "gigcomply"
+      DB_HOST: "pg"
+      DJANGO_ALLOWED_HOSTS:
+      DJANGO_SECRET_KEY:
+      DJANGO_DEBUG:
+      RECAPTCHA_PUBLIC_KEY:
+      RECAPTCHA_PRIVATE_KEY:
+      ROLLBAR_TOKEN:
+      ROLLBAR_ENV:
+      COMPLY_ALERTS_EMAIL:
+      COMPLY_ALERTS_PWD:
+
+    entrypoint: ["holdup", "--verbose", "tcp://pg:5432", "--"]
+    stop_signal: SIGINT
+
+services:
+
+  # warn: db credentials here for development only.
+  pg:
+    image: postgres:10
+    environment:
+      POSTGRES_USER: gigcomply
+      POSTGRES_PASSWORD: gigcomply
+      POSTGRES_DB: gigcomply
+
+  redis:
+    image: redis:4
+
+  # this exists so we can inherit its image in nginx/Dockerfile
+  base:
+    <<: *base-service
+    command: "true"
+
+  nginx:
+    <<: *base-service
+    build:
+      context: .
+      dockerfile: docker/nginx/Dockerfile
+    depends_on:
+      - pg
+      - base
+      - uwsgi
+    entrypoint: ""
+    volumes:
+      - shared-var:/var/shared
+
+  uwsgi:
+    <<: *base-service
+    build:
+      context: .
+      dockerfile: docker/uwsgi/Dockerfile
+
+    volumes:
+      - shared-var:/var/shared
+    depends_on:
+      - pg
+      - postfix
+
+    # this should really be specified in the Dockerfile but it's buggy: https://github.com/docker/compose/issues/3140
+    command: ["/start.sh"]
+
+  celery:
+    <<: *base-service
+    build:
+      context: .
+      dockerfile: docker/celery/Dockerfile
+    command: ["celery", "-A", "tut", "worker"]
+    depends_on:
+      - pg
+      - redis
