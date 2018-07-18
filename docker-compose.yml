@@ -10,7 +10,7 @@ x-base-service:
     environment:
       # force strings, `yes` and other unquoted stuff will end up as bools, integers and other undesired types
       PYTHONUNBUFFERED: "yes"
-      CELERY_QUEUE_NAME: "crawler"
+      CELERY_QUEUE_NAME: "tut"
       DB_NAME: "tut"
       DB_USER: "tut"
       DB_PASSWORD: "tut"
@@ -27,7 +27,6 @@ x-base-service:
 
     entrypoint: ["holdup", "--verbose", "tcp://pg:5432", "--"]
     stop_signal: SIGINT
-
 volumes:
   # used for sharing uwsgi's socket to nginx
   # maybe in the future we'll have more stuff here

@@ -20,13 +20,16 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '@_^7@(658)(%31&^jv3tiwt5en17&u&ut)20usa(7d(++q)nz_'
+SECRET_KEY = ('DJANGO_SECRET_KEY', '@_^7@(658)(%31&^jv3tiwt5en17&u&ut)20usa(7d(++q)nz_')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = bool(int(os.environ.get('DJANGO_DEBUG') or True))  # 0 to disable, 1 to enable
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = os.environ.get('DJANGO_ALLOWED_HOSTS', '').split(',')
 
+#LOGIN_URL = '/login/'
+#LOGIN_REDIRECT_URL = ''
+#LOGOUT_REDIRECT_URL = ''
 
 # Application definition
 
@@ -118,3 +121,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, "static")
+
+# Celery settings go here
+CELERY_BROKER_URL = 'redis://redis:6379/0'
+CELERY_TASK_ALWAYS_EAGER = False
+CELERY_RESULT_BACKEND = 'django-db'
