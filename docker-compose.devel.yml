@@ -31,4 +31,4 @@ services:
 
   celery:
     <<: *develop
-    command: ["celery", "-A", "tut", "worker", "-l", "debug"]
+    command: ["celery", "-A", "fin2018", "worker", "-l", "debug"]

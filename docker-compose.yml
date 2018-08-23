@@ -10,10 +10,10 @@ x-base-service:
     environment:
       # force strings, `yes` and other unquoted stuff will end up as bools, integers and other undesired types
       PYTHONUNBUFFERED: "yes"
-      CELERY_QUEUE_NAME: "tut"
-      DB_NAME: "tut"
-      DB_USER: "tut"
-      DB_PASSWORD: "tut"
+      CELERY_QUEUE_NAME: "fin2018"
+      DB_NAME: "fin2018"
+      DB_USER: "fin2018"
+      DB_PASSWORD: "fin2018"
       DB_HOST: "pg"
       DJANGO_ALLOWED_HOSTS:
       DJANGO_SECRET_KEY:
@@ -38,9 +38,9 @@ services:
   pg:
     image: postgres:10
     environment:
-      POSTGRES_USER: tut
-      POSTGRES_PASSWORD: tut
-      POSTGRES_DB: tut
+      POSTGRES_USER: fin2018
+      POSTGRES_PASSWORD: fin2018
+      POSTGRES_DB: fin2018
 
   redis:
     image: redis:4
@@ -82,7 +82,7 @@ services:
     build:
       context: .
       dockerfile: docker/celery/Dockerfile
-    command: ["celery", "-A", "tut", "worker"]
+    command: ["celery", "-A", "fin2018", "worker"]
     depends_on:
       - pg
       - redis

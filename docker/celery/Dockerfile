@@ -1,4 +1,4 @@
-FROM tut_base
+FROM fin2018_base
 
 COPY setup.py /app/
 COPY src /app/src

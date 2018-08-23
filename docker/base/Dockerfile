@@ -3,7 +3,7 @@ FROM buildpack-deps:bionic AS deps
 ##################################
 
 ARG PROJECT_NAME
-RUN if [ "$PROJECT_NAME" != "tut" ]; then \
+RUN if [ "$PROJECT_NAME" != "fin2018" ]; then \
     echo '\033[1;31m\n\tRefusing to build project. Please run `cp .env-PLATFORM .env` or similar first!\n'; exit 1; fi
 
 RUN apt-get update \
@@ -57,4 +57,4 @@ RUN pip install --force-reinstall --ignore-installed --upgrade --no-index --no-d
 RUN adduser --no-create-home --disabled-login --group --system django
 RUN chown -R django:django /app
 
-ENV DJANGO_SETTINGS_MODULE=tut.settings
+ENV DJANGO_SETTINGS_MODULE=fin2018.settings

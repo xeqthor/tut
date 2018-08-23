@@ -1,4 +1,4 @@
-FROM tut_base
+FROM fin2018_base
 
 RUN apt-get update \
  && apt-get install -yq --no-install-recommends nginx-core \

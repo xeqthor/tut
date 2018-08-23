@@ -1,4 +1,4 @@
-FROM tut_base
+FROM fin2018_base
 
 COPY docker/uwsgi/uwsgi.ini /etc/uwsgi.ini
 COPY docker/uwsgi/start.sh /start.sh

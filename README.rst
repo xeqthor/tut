@@ -44,9 +44,9 @@ If migrations have been recreated run this to drop all your tables and data, and
     docker-compose build --pull base
     docker-compose build
     docker-compose up -d pg
-    docker-compose exec --user=postgres pg dropdb tut
-    docker-compose exec --user=postgres pg createdb tut
-    docker-compose run --user=$UID uwsgi django-admin migrate
+    docker-compose exec --user=postgres pg dropdb fin
+    docker-compose exec --user=postgres pg createdb fin
+    docker-compose run --user=$UID uwsgi django-admin fin
     docker-compose run --user=$UID uwsgi django-admin createsuperuser
 
 .. warning::
