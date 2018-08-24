@@ -82,7 +82,7 @@ services:
     build:
       context: .
       dockerfile: docker/celery/Dockerfile
-    command: ["celery", "-A", "fin2018", "worker"]
+    command: ["celery", "-A", "fin", "worker"]
     depends_on:
       - pg
       - redis
