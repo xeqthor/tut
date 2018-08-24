@@ -27,19 +27,24 @@ DEBUG = bool(int(os.environ.get('DJANGO_DEBUG') or True))  # 0 to disable, 1 to 
 
 ALLOWED_HOSTS = os.environ.get('DJANGO_ALLOWED_HOSTS', '').split(',')
 
-#LOGIN_URL = '/login/'
-#LOGIN_REDIRECT_URL = ''
-#LOGOUT_REDIRECT_URL = ''
+LOGIN_URL = '/login/'
+LOGIN_REDIRECT_URL = 'main:index'
+LOGOUT_REDIRECT_URL = 'finauth:login'
 
 # Application definition
 
 INSTALLED_APPS = [
+    'finauth.apps.FinauthConfig',
+    'main.apps.MainConfig',
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    'crispy_forms',
 ]
 
 MIDDLEWARE = [
@@ -124,8 +129,22 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, "static")
+
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+)
+
+# crispy-forms section
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
+CRISPY_CLASS_CONVERTERS = {
+    'textinput': 'form-control',
+    'emailinput': 'form-control',
+    'passwordinput': 'form-control',
+    'select': 'form-control',
+}
 
 # Celery settings go here
 CELERY_BROKER_URL = 'redis://redis:6379/0'
