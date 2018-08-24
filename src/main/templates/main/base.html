@@ -1,41 +1,42 @@
 <!DOCTYPE html>
-<html lang="en" >
-<head >
-  <meta charset="UTF-8" >
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1, shrink-to-fit=no"
-  >
-  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css"
-    integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M"
-    rel="stylesheet"
-    crossorigin="anonymous"
-  >
-  <title >
-    {% block title %}Fin2018{% endblock %}
-  </title>
-</head >
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    >
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css"
+          integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M"
+          rel="stylesheet"
+          crossorigin="anonymous"
+    >
+    <title>
+        {% block title %}Fin2018{% endblock %}
+    </title>
+</head>
 
-<body >
+<body>
 
 <div class="container">
-<nav class="nav">
-  <div class="navbar-brand">Fin2018</div>
-  <a class="nav-link" href="#"> Bla</a>
-</nav>
+    <nav class="nav">
+        <div class="navbar-brand">Fin2018</div>
+        <a class="nav-link" href="#"> Bla</a>
+        <a class="nav-link" href="{% %}"> Register </a>
+    </nav>
 </div>
 
 
 <div class="container">
-  <div class="row">
-    <div class="col-sm-8">
-     {% block content %}{% endblock %}
+    <div class="row">
+        <div class="col-sm-8">
+            {% block content %}{% endblock %}
+        </div>
+        <div class="col-sm-3 offset-sm-1">
+            {% block sidebar %}{% endblock %}
+        </div>
     </div>
-    <div class="col-sm-3 offset-sm-1">
-      {% block sidebar %}{% endblock %}
-    </div>
-  </div>
 </div>
 
-</body >
-</html >
+</body>
+</html>

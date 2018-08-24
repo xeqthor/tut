@@ -27,7 +27,7 @@ DEBUG = bool(int(os.environ.get('DJANGO_DEBUG') or True))  # 0 to disable, 1 to 
 
 ALLOWED_HOSTS = os.environ.get('DJANGO_ALLOWED_HOSTS', '').split(',')
 
-LOGIN_URL = '/login/'
+LOGIN_URL = 'finauth:login'
 LOGIN_REDIRECT_URL = 'main:index'
 LOGOUT_REDIRECT_URL = 'finauth:login'
 
