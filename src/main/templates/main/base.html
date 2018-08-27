@@ -2,15 +2,11 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta
-            name="viewport"
-            content="width=device-width, initial-scale=1, shrink-to-fit=no"
-    >
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css"
           integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M"
           rel="stylesheet"
-          crossorigin="anonymous"
-    >
+          crossorigin="anonymous">
     <title>
         {% block title %}Fin2018{% endblock %}
     </title>
@@ -21,8 +17,11 @@
 <div class="container">
     <nav class="nav">
         <div class="navbar-brand">Fin2018</div>
-        <a class="nav-link" href="#"> Bla</a>
-        <a class="nav-link" href="{% %}"> Register </a>
+        {% if user.is_authenticated %}
+            <a class="nav-link" href="{% url 'finauth:logout' %}"> Logout </a>
+        {% else %}
+            <a class="nav-link" href="{% url 'finauth:register' %}"> Register </a>
+        {% endif %}
     </nav>
 </div>
 

@@ -1,6 +1,7 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
-from django.http import HttpResponse
 
 
+@login_required()
 def index(request):
-    return HttpResponse("<html><body>Yo.</body></html>")
+    return render(request, 'main/index.html', {'user': request.user})
