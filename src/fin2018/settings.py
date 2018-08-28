@@ -28,14 +28,14 @@ DEBUG = bool(int(os.environ.get('DJANGO_DEBUG') or True))  # 0 to disable, 1 to 
 ALLOWED_HOSTS = os.environ.get('DJANGO_ALLOWED_HOSTS', '').split(',')
 
 LOGIN_URL = 'finauth:login'
-LOGIN_REDIRECT_URL = 'main:index'
-LOGOUT_REDIRECT_URL = 'main:index'
+LOGIN_REDIRECT_URL = 'main_fin:index'
+LOGOUT_REDIRECT_URL = 'main_fin:index'
 
 # Application definition
 
 INSTALLED_APPS = [
     'finauth.apps.FinauthConfig',
-    'main.apps.MainConfig',
+    'main_fin.apps.MainFinConfig',
 
     'django.contrib.admin',
     'django.contrib.auth',
